@@ -2,11 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Tarot</title>
 
   <style>
-    html, body {
+    html,
+    body {
       margin: 0;
       padding: 0;
       width: 100%;
@@ -21,6 +22,7 @@
       width: 100vw;
       height: 100dvh;
       background: #000;
+      overflow: hidden;
     }
 
     iframe {
@@ -30,6 +32,34 @@
       height: 100%;
       border: 0;
     }
+
+    #soundButton {
+      position: fixed;
+      top: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 9999;
+
+      background: #000;
+      color: #fff;
+
+      border: 1px solid rgba(255,255,255,0.5);
+      border-radius: 0;
+
+      padding: 14px 20px;
+
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 2px;
+
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    #soundButton.hidden {
+      display: none;
+    }
   </style>
 </head>
 
@@ -37,11 +67,33 @@
 
   <div class="video-wrap">
     <iframe
-      src="https://player.vimeo.com/video/1220657563?autoplay=1&muted=1&loop=1&playsinline=1&title=0&byline=0&portrait=0"
+      id="tarotVideo"
+      src="https://player.vimeo.com/video/1220657563?autoplay=1&muted=1&loop=1&playsinline=1&title=0&byline=0&portrait=0&controls=0"
       allow="autoplay; fullscreen; picture-in-picture"
       allowfullscreen>
     </iframe>
   </div>
+
+  <button id="soundButton">TAP FOR SOUND</button>
+
+  <script src="https://player.vimeo.com/api/player.js"></script>
+
+  <script>
+    const iframe = document.getElementById('tarotVideo');
+    const player = new Vimeo.Player(iframe);
+    const soundButton = document.getElementById('soundButton');
+
+    soundButton.addEventListener('click', async function () {
+      try {
+        await player.setMuted(false);
+        await player.setVolume(1);
+        await player.play();
+        soundButton.classList.add('hidden');
+      } catch (error) {
+        console.log(error);
+      }
+    });
+  </script>
 
 </body>
 </html>
