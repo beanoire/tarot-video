@@ -83,16 +83,13 @@
     const player = new Vimeo.Player(iframe);
     const soundButton = document.getElementById('soundButton');
 
-    soundButton.addEventListener('click', async function () {
-      try {
-        await player.setMuted(false);
-        await player.setVolume(1);
-        await player.play();
-        soundButton.classList.add('hidden');
-      } catch (error) {
-        console.log(error);
-      }
-    });
+soundButton.addEventListener('click', function () {
+  soundButton.classList.add('hidden');
+
+  player.setMuted(false);
+  player.setVolume(1);
+  player.play();
+});
   </script>
 
 </body>
